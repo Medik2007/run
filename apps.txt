@@ -1,3 +1,5 @@
+arch linux
+
 abiword
 alacritty
 asciiquarium
@@ -21,6 +23,7 @@ ranger
 scrot
 spotify-launcher
 telegram-desktop
+tlp
 ttf-firacode
 ttf-jetbrains-mono-nerd
 unzip
@@ -29,4 +32,12 @@ xcolor
 xorg
 yay
 
-arch linux
+
+run
+prj
+nts
+stf->
+    clg
+    msc
+    img->
+        scr
