@@ -7,9 +7,7 @@ alacritty -e /bin/bash -c "bspc node -d ^3 &&
                            cd youngplanet &&
                            python manage.py runserver &&
                            /bin/bash" &
-alacritty -e /bin/bash -c "bspc node -d ^1 &&
-                           cd ~/prj/youngplanet-env &&
-                           source bin/activate &&
-                           cd youngplanet &&
-			   nvim &&
-                           /bin/bash" &
+cd ~/prj/youngplanet-env
+source bin/activate
+cd youngplanet
+nvim
