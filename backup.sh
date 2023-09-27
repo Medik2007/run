@@ -13,10 +13,10 @@ git add .
 git commit -m "run"
 git push origin master
 
-cd ~/prj/youngplanet-env/
-git add .
-git commit -m "youngplanet"
-git push origin master
+#cd ~/prj/youngplanet-env/
+#git add .
+#git commit -m "youngplanet"
+#git push origin master
 
 cd ~/prj/college/
 git add .
