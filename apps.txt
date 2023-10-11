@@ -7,6 +7,7 @@ backlight_control
 bspwm
 discord
 dmenu
+cups
 firefox
 neofetch
 neovim
@@ -22,6 +23,7 @@ python-virtualenv
 ranger
 scrot
 spotify-launcher
+system-config-printer
 telegram-desktop
 tlp
 ttf-firacode
