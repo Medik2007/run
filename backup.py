@@ -1,8 +1,8 @@
 import subprocess, argparse, os
 
 def configs():
-    dirs = ['bspwm/', 'sxhkd/', 'nvim/', 'polybar/', 'alacritty/']
-    os.chdir(os.path.expanduser('~/.config/'))
+    dirs = ['.apps', '.bashrc', '.xinitrc', '.config/bspwm/', '.config/sxhkd/', '.config/nvim/', '.config/polybar/', '.config/alacritty/']
+    os.chdir(os.path.expanduser('~/'))
     for i in dirs:
         subprocess.call(['git', 'add', i])
     subprocess.call(['git', 'commit', '-m', 'configs'])
