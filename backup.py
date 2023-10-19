@@ -1,4 +1,19 @@
-import subprocess, argparse, os
+import subprocess, argparse, os, tqdm, git
+from git import Repo
+
+
+def push(path, commit):
+    try:
+        repo = Repo(path)
+        repo.git.add(update=True)
+        repo.index.commit(commit)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except git.GitCommandError as e:
+        print(f"Error: {e}")
+
+
+
 
 def configs():
     dirs = ['r/', '.apps', '.bashrc', '.xinitrc', '.config/bspwm/', '.config/sxhkd/', '.config/nvim/', '.config/polybar/', '.config/alacritty/']
@@ -35,7 +50,7 @@ def projects(name, commit):
 
 parser = argparse.ArgumentParser(description='System backup script')
 parser.add_argument('-t', default='system', help='Specify what to backup')
-parser.add_argument('-p', help='If the task is to backup a project, specify wich one')
+parser.add_argument('-s', help='Specify settings for the task')
 parser.add_argument('-c', default='commit', help='Commit name')
 args = parser.parse_args()
 
@@ -44,7 +59,7 @@ if args.t == 'system':
     scripts()
     notes()
     print('Full system backup completed')
-elif args.t == 'projects': projects(args.p, args.c)
+elif args.t == 'projects': projects(args.s, args.c)
 elif args.t == 'configs': configs()
 elif args.t == 'scripts': scripts()
 elif args.t == 'notes': notes()
