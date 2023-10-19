@@ -7,6 +7,7 @@ def push(path, name, commit=None):
     try:
         repo = Repo(HOME + path)
         if repo.is_dirty():
+            print(f'{name}: starting backup...')
             if commit == None: commit = name
             repo.git.add(update=True)
             repo.index.commit(commit)
@@ -20,7 +21,6 @@ def push(path, name, commit=None):
         print(f"{name}: backup error\n{e}")
 
 
-#asd
 
 def configs():
     dirs = ['.apps', '.bashrc', '.xinitrc', '.config/bspwm/', '.config/sxhkd/', '.config/nvim/', '.config/polybar/', '.config/alacritty/']
