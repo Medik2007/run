@@ -69,7 +69,7 @@ if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
     push('run/', 'Scripts')
     push('nts/', 'Notes')
-    print('System backup completed')
+    print('\nSystem backup completed')
 
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
