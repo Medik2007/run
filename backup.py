@@ -9,13 +9,13 @@ def run(name, event):
     sys.stdout.flush()
     while not event.is_set():
         for _ in range(3):
-            time.sleep(1)
+            time.sleep(0.5)
             sys.stdout.write('\033[D \033[D')
             sys.stdout.flush()
-        time.sleep(1)
+        time.sleep(0.5)
         sys.stdout.write('...')
         sys.stdout.flush()
-    sys.stdout.write('\033[D \033[D \033[D \033[D \033[D \033[D completed')
+    sys.stdout.write('\r completed')
     sys.stdout.flush()
 
 
