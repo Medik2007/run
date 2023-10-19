@@ -3,16 +3,20 @@ from git.repo import Repo
 
 HOME = '/home/medik/'
 
-def push(path, commit):
+def push(path, commit, name):
     try:
         repo = Repo(HOME + path)
-        repo.git.add(update=True)
-        repo.index.commit(commit)
-        #repo.git.branch("--set-upstream-to=origin/master", "master")
-        origin = repo.remote(name='origin')
-        origin.push()
+        if repo.is_dirty():
+            repo.git.add(update=True)
+            repo.index.commit(commit)
+            #repo.git.branch("--set-upstream-to=origin/master", "master")
+            origin = repo.remote(name='origin')
+            origin.push()
+            print(f"{name}: backup completed")
+        else:
+            print(f"{name}: nothing to commit")
     except git.GitCommandError as e:
-        print(f"Error: {e}")
+        print(f"{name}: backup error\n{e}")
 
 
 
@@ -27,8 +31,7 @@ def configs():
     print('Configs backup completed')
 
 def scripts():
-    push('run/', 'scripts')
-    print('Scripts backup completed')
+    push('run/', 'scripts', 'Scripts')
 
 def notes():
     os.chdir(os.path.expanduser('~/nts/'))
