@@ -54,11 +54,11 @@ args = parser.parse_args()
 
 if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
-    time.sleep(0.5)
+    time.sleep(0.6)
     push('run/', 'Scripts')
-    time.sleep(0.5)
+    time.sleep(0.6)
     push('nts/', 'Notes')
-    time.sleep(0.5)
+    time.sleep(0.6)
     print('Full system backup completed')
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
