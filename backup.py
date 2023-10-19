@@ -21,8 +21,6 @@ def run(name, event):
         sys.stdout.write(f'\r{name}: backup...')
         sys.stdout.flush()
         time.sleep(0.5)
-    sys.stdout.write(f'\r{name}: backup completed')
-    sys.stdout.flush()
 
 def push(path, name, commit=None, dirs=None):
     try:
@@ -41,7 +39,8 @@ def push(path, name, commit=None, dirs=None):
             origin = repo.remote(name='origin')
             origin.push()
             event.set()
-            time.sleep(1.1)
+            sys.stdout.write(f'\r{name}: backup completed')
+            sys.stdout.flush()
         else:
             print(f"{name}: nothing to commit")
     except git.GitCommandError as e:
