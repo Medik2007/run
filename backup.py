@@ -45,17 +45,11 @@ def push(path, name, commit=None, dirs=None):
         else:
             print(f"{name}: Nothing to commit")
     except git.InvalidGitRepositoryError:
-        answer = input(f"{name}: This folder has no git repository. Would you like to create it? (y/n)")
-        if answer == 'y' or 'yes' or '':
-            repo = Repo.init(HOME + path)
-            url = input("Enter url to remote origin: ")
-            repo.create_remote("origin", url=url)
-            print(f'{name}: Git repository created, retrying backup')
-            push(path, name, commit, dirs)
+        print(f'{name}: This folder has no git repository: {HOME + path}')
     except git.NoSuchPathError:
-        print(f'{name}: Backup folder not found: {HOME + path}')
+        print(f'{name}: Folder not found: {HOME + path}')
     except git.GitCommandError as e:
-        print(f"{name}: Backup error\n{e}")
+        print(f"{name}: Error\n{e}")
 
 
 parser = argparse.ArgumentParser(description='System backup script')
@@ -69,7 +63,7 @@ if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
     push('run/', 'Scripts')
     push('nts/', 'Notes')
-    print('\nSystem backup completed')
+    print('System backup completed')
 
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
