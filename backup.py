@@ -8,6 +8,7 @@ def push(path, commit):
         repo = Repo(HOME + path)
         repo.git.add(update=True)
         repo.index.commit(commit)
+        repo.git.branch("--set-upstream-to=origin/master", "master")
         origin = repo.remote(name='origin')
         origin.push()
     except git.GitCommandError as e:
