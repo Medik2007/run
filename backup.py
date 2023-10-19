@@ -19,6 +19,7 @@ def run(name, event):
         time.sleep(0.5)
         sys.stdout.write(f'\r{name}: backup...')
         sys.stdout.flush()
+        time.sleep(0.5)
     sys.stdout.write(f'\r{name}: backup completed')
     sys.stdout.flush()
 
@@ -41,8 +42,6 @@ def push(path, name, commit=None, dirs=None):
             event.set()
         else:
             print(f"{name}: nothing to commit")
-            event = threading.Event()
-            threading.Thread(target=run, args=(name, event)).start()
     except git.GitCommandError as e:
         print(f"{name}: backup error\n{e}")
 
