@@ -41,6 +41,7 @@ def push(path, name, commit=None, dirs=None):
             origin = repo.remote(name='origin')
             origin.push()
             event.set()
+            time.sleep(1)
         else:
             print(f"{name}: nothing to commit")
     except git.GitCommandError as e:
@@ -54,11 +55,8 @@ args = parser.parse_args()
 
 if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
-    time.sleep(1)
     push('run/', 'Scripts')
-    time.sleep(1)
     push('nts/', 'Notes')
-    time.sleep(1)
     print('Full system backup completed')
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
