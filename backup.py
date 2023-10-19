@@ -10,8 +10,9 @@ def push(path, name, commit=None):
             if commit == None: commit = name
             repo.git.add(update=True)
             repo.index.commit(commit)
+            repo.git.branch("--set-upstream-to=origin/master", "master")
             origin = repo.remote(name='origin')
-            origin.push("master")
+            origin.push()
             print(f"{name}: backup completed")
         else:
             print(f"{name}: nothing to commit")
