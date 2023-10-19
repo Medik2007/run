@@ -9,13 +9,17 @@ def run(name, event):
     sys.stdout.write(f'{name}: backup...')
     sys.stdout.flush()
     while not event.is_set():
-        print(f'\r{name}: backup.. ')
+        sys.stdout.write(f'\r{name}: backup.. ')
+        sys.stdout.flush()
         time.sleep(0.5)
-        print(f'\r{name}: backup.  ')
+        sys.stdout.write(f'\r{name}: backup.  ')
+        sys.stdout.flush()
         time.sleep(0.5)
-        print(f'\r{name}: backup   ')
+        sys.stdout.write(f'\r{name}: backup   ')
+        sys.stdout.flush()
         time.sleep(0.5)
-        print(f'\r{name}: backup...')
+        sys.stdout.write(f'\r{name}: backup...')
+        sys.stdout.flush()
         time.sleep(0.5)
 
 def push(path, name, commit=None, dirs=None):
