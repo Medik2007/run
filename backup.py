@@ -1,20 +1,37 @@
-import subprocess, argparse, os, tqdm, git
+import subprocess, argparse, os, git, sys, time, threading
 from git.repo import Repo
 
 HOME = '/home/medik/'
+
+
+def run(name, event):
+    sys.stdout.write(f'{name}: backup...')
+    sys.stdout.flush()
+    while not event.is_set():
+        for _ in range(3):
+            time.sleep(1)
+            sys.stdout.write('\033[D \033[D')
+            sys.stdout.flush()
+        time.sleep(1)
+        sys.stdout.write('...')
+        sys.stdout.flush()
+    sys.stdout.write('\033[D \033[D \033[D \033[D \033[D \033[D completed')
+    sys.stdout.flush()
+
 
 def push(path, name, commit=None):
     try:
         repo = Repo(HOME + path)
         if repo.is_dirty():
-            print(f'{name}: starting backup...')
+            event = threading.Event()
+            threading.Thread(target=run, args=(name, event)).start()
             if commit == None: commit = name
             repo.git.add(update=True)
             repo.index.commit(commit)
             repo.git.branch("--set-upstream-to=origin/master", "master")
             origin = repo.remote(name='origin')
             origin.push()
-            print(f"{name}: backup completed")
+            event.set()
         else:
             print(f"{name}: nothing to commit")
     except git.GitCommandError as e:
