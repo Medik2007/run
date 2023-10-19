@@ -41,7 +41,7 @@ def push(path, name, commit=None, dirs=None):
             origin = repo.remote(name='origin')
             origin.push()
             event.set()
-            time.sleep(1)
+            time.sleep(1.1)
         else:
             print(f"{name}: nothing to commit")
     except git.GitCommandError as e:
