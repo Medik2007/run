@@ -41,8 +41,7 @@ def push(path, name, commit=None, dirs=None):
             origin.push()
             event.set()
             running.join()
-            sys.stdout.write(f'\r{name}: backup completed')
-            sys.stdout.flush()
+            print(f'\r{name}: backup completed\n')
         else:
             print(f"{name}: nothing to commit")
     except git.GitCommandError as e:
