@@ -1,10 +1,11 @@
 import subprocess, argparse, os, tqdm, git
-from git import Repo
+from git.repo import Repo
 
+HOME = '/home/medik/'
 
 def push(path, commit):
     try:
-        repo = Repo(path)
+        repo = Repo(HOME + path)
         repo.git.add(update=True)
         repo.index.commit(commit)
         origin = repo.remote(name='origin')
@@ -25,10 +26,7 @@ def configs():
     print('Configs backup completed')
 
 def scripts():
-    os.chdir(os.path.expanduser('~/run/'))
-    subprocess.call(['git', 'add', '.'])
-    subprocess.call(['git', 'commit', '-m', 'scripts'])
-    subprocess.call(['git', 'push', 'origin', 'master'])
+    push('run/', 'scripts')
     print('Scripts backup completed')
 
 def notes():
