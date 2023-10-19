@@ -3,15 +3,15 @@ from git.repo import Repo
 
 HOME = '/home/medik/'
 
-def push(path, commit, name):
+def push(path, name, commit=None):
     try:
         repo = Repo(HOME + path)
         if repo.is_dirty():
+            if commit == None: commit = name
             repo.git.add(update=True)
             repo.index.commit(commit)
-            #repo.git.branch("--set-upstream-to=origin/master", "master")
             origin = repo.remote(name='origin')
-            origin.push()
+            origin.push("master")
             print(f"{name}: backup completed")
         else:
             print(f"{name}: nothing to commit")
@@ -31,14 +31,10 @@ def configs():
     print('Configs backup completed')
 
 def scripts():
-    push('run/', 'scripts', 'Scripts')
+    push('run/', 'Scripts')
 
 def notes():
-    os.chdir(os.path.expanduser('~/nts/'))
-    subprocess.call(['git', 'add', '.'])
-    subprocess.call(['git', 'commit', '-m', 'notes'])
-    subprocess.call(['git', 'push', 'origin', 'master'])
-    print('Notes backup completed')
+    push('nts/', 'Notes')
 
 def projects(name, commit):
     if name:
