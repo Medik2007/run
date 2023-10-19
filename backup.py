@@ -57,10 +57,13 @@ if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
     push('run/', 'Scripts')
     push('nts/', 'Notes')
-    print('Full system backup completed')
+    print('System backup completed')
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
-    else: print('Enter a valid project name')
+    else:
+        for i in os.scandir(HOME + 'prj/'):
+            if i.is_dir():
+                push(f'prj/{i}', i, i)
 elif args.t == 'configs': push('/', 'Configs', dirs=CONFIGS)
 elif args.t == 'scripts': push('run/', 'Scripts')
 elif args.t == 'notes': push('nts/', 'Notes')
