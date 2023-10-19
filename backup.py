@@ -1,4 +1,4 @@
-import subprocess, argparse, os, git, sys, time, threading
+import argparse, os, git, sys, time, threading
 from git.repo import Repo
 
 HOME = '/home/medik/'
@@ -6,21 +6,21 @@ CONFIGS = ['.apps', '.bashrc', '.xinitrc', '.config/bspwm/', '.config/sxhkd/', '
 
 
 def run(name, event):
-    sys.stdout.write(f'{name}: backup...')
+    sys.stdout.write(f'{name}: Backup   ')
     sys.stdout.flush()
     while not event.is_set():
-        sys.stdout.write(f'\r{name}: backup.. ')
+        time.sleep(0.5)
+        sys.stdout.write(f'\r{name}: Backup.  ')
         sys.stdout.flush()
         time.sleep(0.5)
-        sys.stdout.write(f'\r{name}: backup.  ')
+        sys.stdout.write(f'\r{name}: Backup.. ')
         sys.stdout.flush()
         time.sleep(0.5)
-        sys.stdout.write(f'\r{name}: backup   ')
+        sys.stdout.write(f'\r{name}: Backup...')
         sys.stdout.flush()
         time.sleep(0.5)
-        sys.stdout.write(f'\r{name}: backup...')
+        sys.stdout.write(f'\r{name}: Backup   ')
         sys.stdout.flush()
-        time.sleep(0.5)
 
 def push(path, name, commit=None, dirs=None):
     try:
@@ -41,11 +41,22 @@ def push(path, name, commit=None, dirs=None):
             origin.push()
             event.set()
             running.join()
-            print(f'\r{name}: backup completed')
+            print(f'\r{name}: Backup completed')
         else:
-            print(f"{name}: nothing to commit")
+            print(f"{name}: Nothing to commit")
+    except git.InvalidGitRepositoryError:
+        answer = input(f"{name}: This folder has no git repository. Would you like to create it? (y/n)")
+        if answer == 'y' or 'yes' or '':
+            repo = Repo.init(HOME + path)
+            url = input("Enter url to remote origin: ")
+            repo.create_remote("origin", url=url)
+            print(f'{name}: Git repository created, retrying backup')
+            push(path, name, commit, dirs)
+    except git.NoSuchPathError:
+        print(f'{name}: Backup folder not found: {HOME + path}')
     except git.GitCommandError as e:
-        print(f"{name}: backup error\n{e}")
+        print(f"{name}: Backup error\n{e}")
+
 
 parser = argparse.ArgumentParser(description='System backup script')
 parser.add_argument('-t', default='system', help='Specify what to backup')
@@ -53,17 +64,21 @@ parser.add_argument('-s', help='Specify settings for the task')
 parser.add_argument('-c', default='commit', help='Commit name')
 args = parser.parse_args()
 
+
 if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
     push('run/', 'Scripts')
     push('nts/', 'Notes')
     print('System backup completed')
+
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
     else:
         for i in os.scandir(HOME + 'prj/'):
             if i.is_dir():
-                push(f'prj/{i}', i, i)
+                push(f'prj/{i.name}', i.name, i.name)
+        print('Projects backup completed')
+
 elif args.t == 'configs': push('/', 'Configs', dirs=CONFIGS)
 elif args.t == 'scripts': push('run/', 'Scripts')
 elif args.t == 'notes': push('nts/', 'Notes')
