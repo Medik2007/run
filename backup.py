@@ -15,7 +15,7 @@ def run(name, event):
         time.sleep(0.5)
         sys.stdout.write('...')
         sys.stdout.flush()
-    sys.stdout.write('\r completed')
+    sys.stdout.write(f'\r{name}: backup completed')
     sys.stdout.flush()
 
 
