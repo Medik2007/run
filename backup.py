@@ -20,7 +20,7 @@ def push(path, name, commit=None):
         print(f"{name}: backup error\n{e}")
 
 
-
+#asd
 
 def configs():
     dirs = ['.apps', '.bashrc', '.xinitrc', '.config/bspwm/', '.config/sxhkd/', '.config/nvim/', '.config/polybar/', '.config/alacritty/']
