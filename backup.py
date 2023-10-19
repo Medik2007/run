@@ -9,26 +9,26 @@ def run(name, event):
     sys.stdout.write(f'{name}: backup...')
     sys.stdout.flush()
     while not event.is_set():
-        if not event.is_set():
-            sys.stdout.write(f'\r{name}: backup.. ')
-            sys.stdout.flush()
-            time.sleep(0.5)
-            sys.stdout.write(f'\r{name}: backup.  ')
-            sys.stdout.flush()
-            time.sleep(0.5)
-            sys.stdout.write(f'\r{name}: backup   ')
-            sys.stdout.flush()
-            time.sleep(0.5)
-            sys.stdout.write(f'\r{name}: backup...')
-            sys.stdout.flush()
-            time.sleep(0.5)
+        sys.stdout.write(f'\r{name}: backup.. ')
+        sys.stdout.flush()
+        time.sleep(0.5)
+        sys.stdout.write(f'\r{name}: backup.  ')
+        sys.stdout.flush()
+        time.sleep(0.5)
+        sys.stdout.write(f'\r{name}: backup   ')
+        sys.stdout.flush()
+        time.sleep(0.5)
+        sys.stdout.write(f'\r{name}: backup...')
+        sys.stdout.flush()
+        time.sleep(0.5)
 
 def push(path, name, commit=None, dirs=None):
     try:
         repo = Repo(HOME + path)
         if repo.is_dirty():
             event = threading.Event()
-            threading.Thread(target=run, args=(name, event)).start()
+            running =  threading.Thread(target=run, args=(name, event))
+            running.start()
             if commit == None: commit = name
             if dirs == None:
                 repo.git.add(update=True)
@@ -40,6 +40,7 @@ def push(path, name, commit=None, dirs=None):
             origin = repo.remote(name='origin')
             origin.push()
             event.set()
+            running.join()
             sys.stdout.write(f'\r{name}: backup completed')
             sys.stdout.flush()
         else:
