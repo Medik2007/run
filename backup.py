@@ -9,7 +9,7 @@ def run(name, event):
     sys.stdout.write(f'{name}: backup...')
     sys.stdout.flush()
     while not event.is_set():
-        for _ in range(1):
+        if not event.is_set():
             sys.stdout.write(f'\r{name}: backup.. ')
             sys.stdout.flush()
             time.sleep(0.5)
