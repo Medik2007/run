@@ -46,11 +46,6 @@ def push(path, name, commit=None, dirs=None):
     except git.GitCommandError as e:
         print(f"{name}: backup error\n{e}")
 
-
-def projects(name, commit):
-    if name: push(f'prj/{name}', name, commit)
-    else: print('Enter a valid project name')
-
 parser = argparse.ArgumentParser(description='System backup script')
 parser.add_argument('-t', default='system', help='Specify what to backup')
 parser.add_argument('-s', help='Specify settings for the task')
@@ -59,8 +54,11 @@ args = parser.parse_args()
 
 if args.t == 'system':
     push('/', 'Configs', dirs=CONFIGS)
+    time.sleep(0.5)
     push('run/', 'Scripts')
+    time.sleep(0.5)
     push('nts/', 'Notes')
+    time.sleep(0.5)
     print('Full system backup completed')
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
