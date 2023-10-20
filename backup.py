@@ -60,18 +60,20 @@ args = parser.parse_args()
 
 
 if args.t == 'system':
-    push('/', 'Configs', dirs=CONFIGS)
-    push('run/', 'Scripts')
-    push('nts/', 'Notes')
-    print('System backup completed')
+    if input('Start system backup? (enter)') == '':
+        push('/', 'Configs', dirs=CONFIGS)
+        push('run/', 'Scripts')
+        push('nts/', 'Notes')
+        print('System backup completed')
 
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
     else:
-        for i in os.scandir(HOME + 'prj/'):
-            if i.is_dir():
-                push(f'prj/{i.name}', i.name, i.name)
-        print('Projects backup completed')
+        if input('Start all projects backup? (enter)') == '':
+            for i in os.scandir(HOME + 'prj/'):
+                if i.is_dir():
+                    push(f'prj/{i.name}', i.name, i.name)
+            print('Projects backup completed')
 
 elif args.t == 'configs': push('/', 'Configs', dirs=CONFIGS)
 elif args.t == 'scripts': push('run/', 'Scripts')

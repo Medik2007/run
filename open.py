@@ -32,5 +32,8 @@ if args.t == 'yp':
         'nvim'
     ))
 
+elif args.t == 'rpi':
+    run('openscad ~/prj/lilstevie/rpi4.scad')
+    run('cd ~/prj/lilstevie && nvim')
 else:
     print(f"Error: No such project opening script: {args.t}")
