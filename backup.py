@@ -65,6 +65,7 @@ if args.t == 'system':
         push('run/', 'Scripts')
         push('nts/', 'Notes')
         print('System backup completed')
+    else: print('Aborting')
 
 elif args.t == 'projects': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
@@ -74,6 +75,7 @@ elif args.t == 'projects':
                 if i.is_dir():
                     push(f'prj/{i.name}', i.name, i.name)
             print('Projects backup completed')
+        else: print('Aborting')
 
 elif args.t == 'configs': push('/', 'Configs', dirs=CONFIGS)
 elif args.t == 'scripts': push('run/', 'Scripts')
