@@ -1,16 +1,15 @@
 import subprocess, argparse, time
 
 parser = argparse.ArgumentParser(description='Script that automates opening projects')
-parser.add_argument('-o', help='Which project to open')
+parser.add_argument('-t', help='Set a task (Which project to open)')
 parser.add_argument('-s', help='Specify settings for project opening')
 args = parser.parse_args()
 
-def run(command):
-    subprocess.Popen(command, shell=True).wait()
+def run(command): subprocess.Popen(command, shell=True).wait()
 
-s = int(args.s)
-if args.o == 'yp':
-    if s == None: s = 1
+if args.t == 'yp':
+    s = 1
+    if args.s != None: s = int(args.s)
 
     run((
         'alacritty -e /bin/bash -c "'
@@ -34,4 +33,4 @@ if args.o == 'yp':
     ))
 
 else:
-    print(f"No such project opening script: {args.o}")
+    print(f"Error: No such project opening script: {args.t}")
