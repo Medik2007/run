@@ -33,7 +33,13 @@ if args.t == 'yp':
     ))
 
 elif args.t == 'rpi':
-    run('openscad ~/prj/lilstevie/rpi4.scad')
-    run('cd ~/prj/lilstevie && nvim')
+    s = 1
+    if args.s != None: s = int(args.s)
+    run('feh ~/prj/lil/rpi4.jpg &')
+    time.sleep(1)
+    run(f"bspc node -d ^{s+1} &")
+    run('openscad ~/prj/lil/parts/main.scad &')
+    run('nvim ~/prj/lil/parts/main.scad')
+
 else:
     print(f"Error: No such project opening script: {args.t}")
