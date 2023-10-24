@@ -37,7 +37,7 @@ elif args.t == 'rpi':
     if args.s != None: s = int(args.s)
     run('feh ~/prj/lil/rpi4.jpg &')
     time.sleep(1)
-    run(f"bspc node -d ^{s+1} &")
+    run(f"bspc node -d {s+1} &")
     run('openscad ~/prj/lil/parts/main.scad &')
     run('nvim ~/prj/lil/parts/main.scad')
 
