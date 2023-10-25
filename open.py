@@ -13,17 +13,17 @@ if args.t == 'yp':
 
     run((
         'alacritty -e /bin/bash -c "'
-        f'bspc node -d ^{s+2} && '
-        'cd ~/prj/yp && '
-        'source bin/activate && '
-        'cd youngplanet && '
-        'python manage.py runserver && '
+        f'bspc node -d {s+2} &'
+        'cd ~/prj/yp &&'
+        'source bin/activate &&'
+        'cd youngplanet &&'
+        'python manage.py runserver &&'
         '/bin/bash" &'
     ))
 
-    run("firefox http://127.0.0.1:8000 https://chat.geekgpt.org/ &")
+    run("firefox http://127.0.0.1:8000 https://gpt-chatbot.ru/chat-gpt-ot-openai-dlya-generacii-teksta &")
     time.sleep(1)
-    run(f"bspc node -d ^{s+1} &")
+    run(f"bspc node -d {s+1} &")
 
     run((
         'cd ~/prj/yp && '
