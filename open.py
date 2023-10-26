@@ -8,7 +8,7 @@ args = parser.parse_args()
 def run(command): subprocess.Popen(command, shell=True).wait()
 
 if args.t == 'yp':
-    s = 1
+    s = int(subprocess.Popen(['bspc','query','-D','-d','--names'], stdout=subprocess.PIPE ).communicate()[0])
     if args.s != None: s = int(args.s)
 
     run((
@@ -33,7 +33,7 @@ if args.t == 'yp':
     ))
 
 elif args.t == 'rpi':
-    s = 1
+    s = int(subprocess.Popen(['bspc','query','-D','-d','--names'], stdout=subprocess.PIPE ).communicate()[0])
     if args.s != None: s = int(args.s)
     run('feh ~/prj/lil/rpi4.jpg &')
     time.sleep(1)
