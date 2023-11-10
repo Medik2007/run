@@ -53,13 +53,13 @@ def push(path, name, commit=None, dirs=None):
 
 
 parser = argparse.ArgumentParser(description='System backup script')
-parser.add_argument('-t', default='system', help='Specify what to backup')
+parser.add_argument('-t', default='s', help='Specify what to backup')
 parser.add_argument('-s', help='Specify settings for the task')
 parser.add_argument('-c', default='commit', help='Commit name')
 args = parser.parse_args()
 
 
-if args.t == 'system':
+if args.t == 's':
     if input('Start system backup? (enter)') == '':
         push('/', 'Configs', dirs=CONFIGS)
         push('run/', 'Scripts')
@@ -67,7 +67,7 @@ if args.t == 'system':
         print('System backup completed')
     else: print('Aborting')
 
-elif args.t == 'projects': 
+elif args.t == 'p': 
     if args.s: push(f'prj/{args.s}', args.s, args.c)
     else:
         if input('Start all projects backup? (enter)') == '':
